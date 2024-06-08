@@ -13,8 +13,7 @@ services:
     env_file:
       - ./deployment/configs/envs/backend.env
       - ./deployment/configs/envs/postgres.env
-#    volumes:
-#      - ./:/app/ # real time change
+    stop_signal: SIGKILL
 
   db:
     build:
@@ -26,8 +25,7 @@ services:
       interval: 2s
       timeout: 10s
       retries: 5
+    ports:
+      - 5432:5432
     env_file:
       - ./deployment/configs/envs/postgres.env
-#    volumes:
-#      - /tmp/web/log/postgres:/var/log/postgresql
-#      - /tmp/web/db/history/:/root/psql_history/
