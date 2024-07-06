@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.Serializer):
+class TrelloUserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
@@ -25,4 +25,4 @@ class CreateUserResponseSerializer(serializers.Serializer):
 
 class ListUsersResponseSerializer(serializers.Serializer):
     total_users = serializers.IntegerField()
-    users = UserSerializer(many=True)
+    users = TrelloUserSerializer(many=True)

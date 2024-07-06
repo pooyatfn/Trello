@@ -32,4 +32,5 @@ urlpatterns = [
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     #
     path('users/', include('trello_user.urls')),
+    path('workspaces/', include('workspace.urls')),
 ]

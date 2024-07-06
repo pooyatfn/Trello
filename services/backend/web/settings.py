@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'trello_user.apps.TrelloUserConfig',
     'corsheaders',
+    'workspace.apps.WorkspaceConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
