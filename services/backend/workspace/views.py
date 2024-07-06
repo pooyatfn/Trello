@@ -11,26 +11,6 @@ class WorkspaceListCreateView(generics.ListCreateAPIView):
     queryset = Workspace.objects.all()
     serializer_class = WorkspaceSerializer
 
-    # def get(self, request, *args, **kwargs):
-    #     # Retrieve workspace users and their admin status
-    #     workspaces = []
-    #     users_with_admin_status = []
-    #     for workspace in self.get_queryset():
-    #         for membership in workspace.workspacemembership_set.all():
-    #             users_with_admin_status.append({
-    #                 'user': membership.user.username,
-    #                 'is_admin': membership.is_admin
-    #             })
-    #         workspace['users'] = users_with_admin_status
-    #         workspaces.append(workspace)
-    #
-    #     # Serialize the workspace data
-    #     serializer = self.get_serializer()
-    #     response_data = serializer.data
-    #     response_data['users'] = users_with_admin_status
-    #
-    #     return Response(workspaces)
-
 
 class WorkspaceRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Workspace.objects.all()
@@ -62,12 +42,4 @@ class WorkspaceRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-        # return Response({'message': 'Users added/updated successfully.'}, status=status.HTTP_200_OK)
-
         return Response({'message': 'Workspace updated successfully.'}, status=status.HTTP_200_OK)
-
-    # def destroy(self, request, *args, **kwargs):
-    #     # Handle deleting workspace
-    #     # ...
-    #
-    #     return Response({'message': 'Workspace deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)

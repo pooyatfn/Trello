@@ -1,5 +1,3 @@
-# workspaces/serializers.py
-
 from rest_framework import serializers
 
 from trello_user.models import TrelloUser
@@ -13,7 +11,7 @@ class TrelloUserSerializer(serializers.ModelSerializer):
 
 
 class WorkspaceMembershipSerializer(serializers.ModelSerializer):
-    user = TrelloUserSerializer()
+    is_admin = serializers.BooleanField()
 
     class Meta:
         model = WorkspaceMembership
@@ -21,7 +19,7 @@ class WorkspaceMembershipSerializer(serializers.ModelSerializer):
 
 
 class WorkspaceSerializer(serializers.ModelSerializer):
-    users = WorkspaceMembershipSerializer(many=True, read_only=True, source='workspace_membership')
+    users = WorkspaceMembershipSerializer(source='workspacemembership_set', many=True, read_only=True)
 
     class Meta:
         model = Workspace

@@ -9,7 +9,7 @@ class Workspace(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    users = models.ManyToManyField(TrelloUser, through='WorkspaceMembership')
+    users = models.ManyToManyField(TrelloUser, through='WorkspaceMembership', through_fields=('workspace', 'user'))
 
     def __str__(self):
         return self.name
