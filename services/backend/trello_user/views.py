@@ -13,6 +13,7 @@ from .serializers import *
 
 
 class UsersView(GenericAPIView):
+    queryset = TrelloUser.objects.all()
 
     @extend_schema(
         responses={200: ListUsersResponseSerializer},
