@@ -1,6 +1,8 @@
+import json
+
 from django.contrib import messages
 from drf_spectacular.types import datetime
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -11,8 +13,6 @@ from .serializers import *
 
 
 class UsersView(GenericAPIView):
-    serializer_class = UserSerializer
-    queryset = TrelloUser.objects.all()
 
     @extend_schema(
         responses={200: ListUsersResponseSerializer},
@@ -35,17 +35,12 @@ class UsersView(GenericAPIView):
         return Response(response_serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(
-        parameters=[
-            OpenApiParameter(name='first_name', type=str, description='First name of user', default=None),
-            OpenApiParameter(name='last_name', type=str, description='Last name of user'),
-            OpenApiParameter(name='username', type=str, description='Username of user, must be unique', required=True),
-            OpenApiParameter(name='email', type=str, description='Email of user, must be unique', required=True),
-            OpenApiParameter(name='password', type=str, description='Password of user', required=True),
-        ],
+        request=CreateUserSerializer,
         responses={200: CreateUserResponseSerializer},
     )
     def post(self, request):
-        serializer = CreateUserSerializer(data=request.query_params)
+        body = json.loads(request.body)
+        serializer = CreateUserSerializer(data=body)
         response_serializer_class = CreateUserResponseSerializer
         serializer.is_valid(raise_exception=True)
         first_name = serializer.validated_data.get('first_name')
@@ -79,4 +74,6 @@ class UsersView(GenericAPIView):
         })
         response_serializer.is_valid()
         messages.success(request, 'Account created successfully. Please log in.')
-        return Response(response_serializer.data, status=status.HTTP_200_OK)
+        response = Response(response_serializer.data, status=status.HTTP_200_OK)
+        response["referrer-policy"] = "unsafe-none"
+        return response
