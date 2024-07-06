@@ -32,7 +32,10 @@ class UsersView(GenericAPIView):
                  "email": user.email, "date_joined": user.date_joined, "updated_at": user.updated_at} for user in
                 self.get_queryset()], })
         response_serializer.is_valid()
-        return Response(response_serializer.data, status=status.HTTP_200_OK)
+        response = Response(response_serializer.data, status=status.HTTP_200_OK)
+        response["cross-origin-opener-policy"] = "unsafe-none"
+        response["referrer-policy"] = "no-referrer"
+        return response
 
     @extend_schema(
         request=CreateUserSerializer,
@@ -75,5 +78,6 @@ class UsersView(GenericAPIView):
         response_serializer.is_valid()
         messages.success(request, 'Account created successfully. Please log in.')
         response = Response(response_serializer.data, status=status.HTTP_200_OK)
-        response["referrer-policy"] = "unsafe-none"
+        response["cross-origin-opener-policy"] = "unsafe-none"
+        response["referrer-policy"] = "no-referrer"
         return response
