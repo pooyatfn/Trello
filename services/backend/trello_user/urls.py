@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import UsersView
+from .views import UserListCreateView, TrelloUerRetrieveUpdateDeleteView
 
 urlpatterns = [
-    path('', UsersView.as_view(), name='Users'),
+    path('', UserListCreateView.as_view(), name='user-list-create'),
+    path('<int:pk>/', TrelloUerRetrieveUpdateDeleteView.as_view(), name='trello-user-detail'),
 ]
