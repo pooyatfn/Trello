@@ -27,7 +27,7 @@ docker_compose_down() {
 
 docker_compose_up() {
   echo "Docker compose up"
-  docker compose --project-directory . -f "$DOCKER_COMPOSE_WEB" up -d
+  docker compose --project-directory . -f "$DOCKER_COMPOSE_WEB" up
 }
 
 function main() {
