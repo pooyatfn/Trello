@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from .models import TrelloUser
-from .serializers import TrelloUserSerializer
+from .serializers import TrelloUserSerializer, ListUserTasksQuerySerializer
 
 
 class UserListCreateView(ListCreateAPIView):
@@ -30,9 +30,8 @@ class UserTasksView(APIView):
         ],
     )
     def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('user_id')
+        user_id = request.query_params['user_id']
         # request
-        print("///////////////////" + str(request.body), flush=True)
         try:
             user = TrelloUser.objects.get(id=user_id)
             tasks = user.get_tasks()

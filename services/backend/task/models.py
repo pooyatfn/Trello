@@ -1,6 +1,6 @@
 from django.db import models
 
-from trello_user.models import TrelloUser
+# from trello_user.models import TrelloUser
 from workspace.models import Workspace
 
 
@@ -25,7 +25,7 @@ class Task(models.Model):
     due_date = models.DateField()
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
-    assignee = models.ForeignKey(TrelloUser, null=True, blank=True, on_delete=models.SET_NULL)
+    assignee = models.ForeignKey(to='trello_user.TrelloUser', null=True, blank=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image_url = models.URLField(null=True, blank=True)
@@ -43,7 +43,7 @@ class SubTask(models.Model):
     title = models.CharField(max_length=255)
     is_completed = models.CharField(max_length=10, choices=IS_COMPLETED_CHOICES, default='No')
     task = models.ForeignKey(Task, related_name='subtasks', on_delete=models.CASCADE)
-    assignee = models.ForeignKey(TrelloUser, null=True, blank=True, on_delete=models.SET_NULL)
+    assignee = models.ForeignKey(to='trello_user.TrelloUser', null=True, blank=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

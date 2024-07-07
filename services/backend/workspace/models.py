@@ -1,6 +1,6 @@
 from django.db import models
 
-from trello_user.models import TrelloUser
+# from trello_user.models import TrelloUser
 
 
 class Workspace(models.Model):
@@ -9,14 +9,14 @@ class Workspace(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    users = models.ManyToManyField(TrelloUser, through='WorkspaceMembership', through_fields=('workspace', 'user'))
+    users = models.ManyToManyField(to='trello_user.TrelloUser', through='WorkspaceMembership', through_fields=('workspace', 'user'))
 
     def __str__(self):
         return self.name
 
 
 class WorkspaceMembership(models.Model):
-    user = models.ForeignKey(TrelloUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(to='trello_user.TrelloUser', on_delete=models.CASCADE)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
     is_admin = models.BooleanField(default=False)
 
