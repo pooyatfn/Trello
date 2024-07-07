@@ -34,4 +34,5 @@ urlpatterns = [
                   #
                   path('users/', include('trello_user.urls')),
                   path('workspaces/', include('workspace.urls')),
+                  path('', include('task.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

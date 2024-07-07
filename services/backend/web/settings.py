@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from web import swagger_settings
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
     'trello_user.apps.TrelloUserConfig',
     'corsheaders',
     'workspace.apps.WorkspaceConfig',
+    'task.apps.TaskConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
