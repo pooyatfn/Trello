@@ -39,6 +39,7 @@ class WorkspaceSerializer(serializers.ModelSerializer):
             user = TrelloUser.objects.get(username=username)
             membership = WorkspaceMembership.objects.get(workspace=instance, user=user.id)
             user_dict['is_admin'] = membership.is_admin
+            user_dict['id'] = user.id
         return rep
 
     def create(self, validated_data):
