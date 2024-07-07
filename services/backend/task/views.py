@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 from .models import Task, SubTask
 from .serializers import TaskSerializer, SubTaskSerializer
@@ -8,7 +8,7 @@ from .serializers import TaskSerializer, SubTaskSerializer
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         workspace_id = self.kwargs['workspaceId']
@@ -16,13 +16,13 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         workspace_id = self.kwargs['workspaceId']
-        serializer.save(workspace_id=workspace_id)  # , created_by=self.request.user)
+        serializer.save(workspace_id=workspace_id)
 
 
 class SubTaskViewSet(viewsets.ModelViewSet):
     queryset = SubTask.objects.all()
     serializer_class = SubTaskSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         task_id = self.kwargs['taskId']
@@ -30,4 +30,4 @@ class SubTaskViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         task_id = self.kwargs['taskId']
-        serializer.save(task_id=task_id)  # , created_by=self.request.user)
+        serializer.save(task_id=task_id)
